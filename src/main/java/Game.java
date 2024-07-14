@@ -48,20 +48,22 @@ class Game {
     }
 
     public static void determineWinners(Player dealer, List<Player> players) {
-        int dealerWins = 0;
-        int dealerLosses = 0;
+        int dealerProfit = 0;
 
         for (Player player : players) {
             String result = determineWinner(player, dealer);
             if (result.contains("승리")) {
-                dealerLosses++;
+                dealerProfit -= player.betAmount;
+                System.out.println(player.name + ": " + player.betAmount);
             } else if (result.contains("패배")) {
-                dealerWins++;
+                dealerProfit += player.betAmount;
+                System.out.println(player.name + ": -" + player.betAmount);
+            } else {
+                System.out.println(player.name + ": 0");
             }
-            System.out.println(result);
         }
 
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: " + dealerWins + "승 " + dealerLosses + "패");
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + dealerProfit);
     }
 }

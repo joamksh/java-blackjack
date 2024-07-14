@@ -11,11 +11,14 @@ public class GameApp {
         String[] playerNames = input.split(",");
 
         Deck deck = new Deck();
-        Player dealer = new Player("딜러", Role.DEALER);
+        Player dealer = new Player("딜러", Role.DEALER, 0);
 
         List<Player> players = new ArrayList<>();
         for (String name : playerNames) {
-            players.add(new Player(name.trim(), Role.PLAYER));
+            System.out.println(name.trim() + "의 배팅 금액은 얼마입니까?");
+            int betAmount = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            players.add(new Player(name.trim(), Role.PLAYER, betAmount));
         }
 
         String playerNamesList = players.stream()

@@ -5,11 +5,13 @@ class Player {
     String name;
     List<Card> cards;
     Role role;
+    int betAmount;
 
-    public Player(String name, Role role) {
+    public Player(String name, Role role, int betAmount) {
         this.name = name;
         this.cards = new ArrayList<>();
         this.role = role;
+        this.betAmount = betAmount;
     }
 
     public void addCard(Card card) {
