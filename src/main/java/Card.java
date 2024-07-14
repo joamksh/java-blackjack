@@ -1,4 +1,4 @@
-public class Card {
+class Card {
     String suit;
     String value;
 
@@ -21,13 +21,8 @@ public class Card {
         return suit;
     }
 
-
-
     @Override
     public String toString() {
-        return "Card{" +
-                "suit='" + suit + '\'' +
-                ", value='" + value + '\'' +
-                '}';
+        return suit + " " + value;
     }
 }

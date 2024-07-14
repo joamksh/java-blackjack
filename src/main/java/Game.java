@@ -1,19 +1,25 @@
 import java.util.List;
+import java.util.Scanner;
 
-public class Game {
-
+class Game {
     public static void playGame(Deck deck, Player dealer, List<Player> players) {
+        Scanner scanner = new Scanner(System.in);
+
         for (Player player : players) {
             while (player.isTotalUnderOrEqual21()) {
-                Card card = deck.drawCard();
-                player.addCard(card);
-                if (player.isTotalOver21()) {
+                System.out.println(player.name + "는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
+                String answer = scanner.nextLine();
+                if ("n".equalsIgnoreCase(answer)) {
                     break;
                 }
+                Card card = deck.drawCard();
+                player.addCard(card);
+                System.out.println(player);
             }
         }
 
-        while (dealer.isTotalUnderOrEqual16()) {
+        if (dealer.isTotalUnderOrEqual16()) {
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
             dealer.addCard(deck.drawCard());
         }
     }
@@ -23,34 +29,39 @@ public class Game {
         int dealerTotal = dealer.getTotal();
 
         if (player.isTotalOver21() && dealer.isTotalOver21()) {
-            return "All bust.";
+            return "모두 버스트.";
         }
 
         if (player.isTotalOver21()) {
-            return player.name + " loses.";
+            return player.name + ": 패배";
         } else if (dealer.isTotalOver21()) {
-            return player.name + " wins!";
+            return player.name + ": 승리";
         }
 
         if (playerTotal > dealerTotal) {
-            return player.name + " wins!";
+            return player.name + ": 승리";
         } else if (dealerTotal > playerTotal) {
-            return player.name + " loses.";
+            return player.name + ": 패배";
         } else {
-            return "It's a tie for " + player.name + ".";
+            return player.name + ": 무승부";
         }
     }
 
     public static void determineWinners(Player dealer, List<Player> players) {
-        boolean allBust = dealer.isTotalOver21() && players.stream().allMatch(Player::isTotalOver21);
+        int dealerWins = 0;
+        int dealerLosses = 0;
 
-        if (allBust) {
-            System.out.println("All bust. No winners.");
-        } else {
-            for (Player player : players) {
-                String result = determineWinner(player, dealer);
-                System.out.println(result);
+        for (Player player : players) {
+            String result = determineWinner(player, dealer);
+            if (result.contains("승리")) {
+                dealerLosses++;
+            } else if (result.contains("패배")) {
+                dealerWins++;
             }
+            System.out.println(result);
         }
+
+        System.out.println("## 최종 승패");
+        System.out.println("딜러: " + dealerWins + "승 " + dealerLosses + "패");
     }
 }

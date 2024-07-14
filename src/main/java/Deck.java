@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Deck {
+class Deck {
     List<Card> cards;
 
     public Deck() {
@@ -32,6 +32,4 @@ public class Deck {
     public List<Card> getCards() {
         return cards;
     }
-
-
 }
