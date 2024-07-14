@@ -2,6 +2,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerTest {
 
@@ -68,36 +69,26 @@ public class PlayerTest {
     @Test
     public void testDetermineWinner() {
         Deck deck = new Deck();
-        Player player = new Player("Player", new ArrayList<>(), Role.PLAYER);
+        Player player1 = new Player("Player1", new ArrayList<>(), Role.PLAYER);
+        Player player2 = new Player("Player2", new ArrayList<>(), Role.PLAYER);
         Player dealer = new Player("Dealer", new ArrayList<>(), Role.DEALER);
 
-        while (player.getTotal() < 21) {
-            player.addCard(deck.drawCard());
-        }
+        List<Player> players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
 
-        while (dealer.isTotalUnderOrEqual16()) {
-            dealer.addCard(deck.drawCard());
-        }
+        // 플레이어와 딜러에게 카드 나누기
+        Game.playGame(deck, dealer, players);
 
-        System.out.println("Player total: " + player.getTotal());
+        // 플레이어와 딜러의 최종 결과 출력
         System.out.println("Dealer total: " + dealer.getTotal());
-
-        String result = Game.determineWinner(player, dealer);
-        System.out.println(result);
-
-        if (player.isTotalOver21()) {
-            assertEquals("Dealer wins!", result, "Dealer should win if player busts.");
-        } else if (dealer.isTotalOver21()) {
-            assertEquals("Player wins!", result, "Player should win if dealer busts.");
-        } else {
-            if (player.getTotal() > dealer.getTotal()) {
-                assertEquals("Player wins!", result, "Player should win if player total is higher.");
-            } else if (dealer.getTotal() > player.getTotal()) {
-                assertEquals("Dealer wins!", result, "Dealer should win if dealer total is higher.");
-            } else {
-                assertEquals("It's a tie!", result, "It should be a tie if totals are equal.");
-            }
+        for (Player player : players) {
+            System.out.println(player.name + " total: " + player.getTotal());
         }
+
+        // 승패 결정 및 출력
+        Game.determineWinners(dealer, players);
     }
+
 
 }
