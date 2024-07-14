@@ -8,7 +8,7 @@ public class PlayerTest {
     @Test
     public void testPlayerTotalUnderOrEqual21() {
         Deck deck = new Deck();
-        Player player = new Player("TestPlayer", new ArrayList<>());
+        Player player = new Player("TestPlayer",new ArrayList<>(), Role.PLAYER);
 
 
         Card firstCard = deck.drawCard();
@@ -17,15 +17,21 @@ public class PlayerTest {
         Card secondCard = deck.drawCard();
         player.addCard(secondCard);
 
-        // Print the values of the drawn cards
         System.out.println("First card: " + firstCard);
         System.out.println("Second card: " + secondCard);
 
-        // Calculate total and print it
         int total = player.getTotal();
-        System.out.println("Total: " + total);
+        System.out.println("Total of player's cards: " + total);
 
-        // Check if the total is under or equal to 21
-        assertTrue(player.isTotalUnderOrEqual21(), "21이하이다");
+        assertTrue(player.isTotalUnderOrEqual21(), "The total should be 21 or less initially.");
+
+        while (player.isTotalUnderOrEqual21()) {
+            Card card = deck.drawCard();
+            player.addCard(card);
+            total = player.getTotal();
+            System.out.println("Drew card: " + card + ", new total: " + total);
+        }
+
+        assertTrue(player.isBust(), "The player should bust (total should exceed 21) after drawing more cards.");
     }
 }

@@ -1,3 +1,3 @@
 public enum Role {
-Dealer,Player
+DEALER,PLAYER
 }

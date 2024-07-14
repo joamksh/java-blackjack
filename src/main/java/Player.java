@@ -4,9 +4,17 @@ public class Player {
     String name;
     List<Card> cards;
 
+    Role role;
+
     public Player(String name, List<Card> cards) {
         this.name = name;
         this.cards = cards;
+    }
+
+    public Player(String name, List<Card> cards, Role role) {
+        this.name = name;
+        this.cards = cards;
+        this.role = role;
     }
 
     public void addCard(Card card) {
@@ -24,4 +32,9 @@ public class Player {
     public boolean isTotalUnderOrEqual21() {
         return getTotal() <= 21;
     }
+
+    public boolean isBust() {
+        return getTotal() > 21;
+    }
+
 }
