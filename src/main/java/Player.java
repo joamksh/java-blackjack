@@ -33,8 +33,19 @@ public class Player {
         return getTotal() <= 21;
     }
 
-    public boolean isBust() {
+
+    public boolean isTotalOver21() {
         return getTotal() > 21;
     }
+
+    public boolean isTotalUnderOrEqual16() {
+        return getTotal() <= 16;
+    }
+
+
+    public boolean isTotalOver16() {
+        return getTotal() > 16;
+    }
+
 
 }
